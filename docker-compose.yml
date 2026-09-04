@@ -1,0 +1,60 @@
+# =============================================================================
+# AirPass — plateforme d'enregistrement en ligne (Air Burkina)
+# Un conteneur par service : db (MySQL) · api (Laravel) · web (React/nginx)
+# Lancement : docker compose up -d --build
+# =============================================================================
+
+services:
+  # --- Base de données -------------------------------------------------------
+  db:
+    image: mysql:8.0
+    container_name: airpass_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootsecret
+      MYSQL_DATABASE: airpass
+      MYSQL_USER: airpass
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uairpass", "-psecret"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # --- API Laravel -----------------------------------------------------------
+  api:
+    build: ./api
+    container_name: airpass_api
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8001:8000"
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: airpass
+      DB_USERNAME: airpass
+      DB_PASSWORD: secret
+      APP_URL: http://localhost:8001
+      FRONTEND_URL: http://localhost:5174
+
+  # --- Front-end React (servi par nginx) -------------------------------------
+  web:
+    build:
+      context: ./web
+      args:
+        # URL de l'API telle que le navigateur de l'utilisateur la voit.
+        VITE_API_URL: http://localhost:8001
+    container_name: airpass_web
+    depends_on:
+      - api
+    ports:
+      - "5174:80"
+
+volumes:
+  db_data:

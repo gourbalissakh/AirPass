@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="fr" data-theme="sombre">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070b18" />
+    <meta
+      name="description"
+      content="AirPass — enregistrez-vous en ligne sur les vols Air Burkina, choisissez votre siège et recevez votre carte d'embarquement."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>AirPass — Enregistrement en ligne Air Burkina</title>
+
+    <script>
+      // Applique le thème avant le premier rendu : évite le flash de couleur.
+      (function () {
+        try {
+          var t = localStorage.getItem('airpass.theme');
+          if (!t) {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'clair' : 'sombre';
+          }
+          document.documentElement.dataset.theme = t;
+          document
+            .querySelector('meta[name=theme-color]')
+            .setAttribute('content', t === 'clair' ? '#f7f5f1' : '#070b18');
+        } catch (e) { /* stockage indisponible : on garde le thème sombre */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

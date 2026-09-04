@@ -1,0 +1,25 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Éditeurs
+.idea/
+.vscode/
+*.swp
+
+# Environnement
+.env
+.env.*
+!.env.example
+
+# Dépendances / build
+node_modules/
+vendor/
+dist/
+
+# Logs
+*.log
+
+# Bases locales
+*.sqlite
+*.sqlite-journal

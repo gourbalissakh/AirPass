@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   AirPass — système de design « nuit sahélienne »
+   --------------------------------------------------------------------------
+   Bleu nuit profond (le ciel au-dessus du Sahel), terre cuite et or (la
+   latérite et la lumière rasante), vert d'eau pour les validations.
+
+   Tous les jetons sont définis deux fois — thème sombre puis thème clair —
+   et exposés à Tailwind via `@theme inline`, ce qui permet de basculer d'un
+   thème à l'autre à chaud, sans recompiler.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    --fond:            #070b18;
+    --fond-voile:      #070b18e6;
+    --surface:         #0e1526;
+    --surface-2:       #161f35;
+    --surface-3:       #1e2942;
+    --bordure:         #26314c;
+    --bordure-forte:   #384668;
+
+    --texte:           #eaf0ff;
+    --texte-doux:      #97a5c4;
+    --texte-faible:    #63719a;
+
+    --accent:          #e8703a;   /* terre cuite */
+    --accent-fort:     #f08850;
+    --accent-voile:    #e8703a1f;
+    --or:              #f5b72c;
+    --or-voile:        #f5b72c1f;
+    --succes:          #2fb89a;
+    --succes-voile:    #2fb89a1f;
+    --danger:          #f0546b;
+    --danger-voile:    #f0546b1f;
+
+    --ombre-douce:     0 1px 2px #0006, 0 8px 24px -12px #000a;
+    --ombre-forte:     0 2px 4px #0008, 0 24px 60px -20px #000c;
+    --anneau:          #e8703a55;
+
+    /* Dégradés réutilisés par le héros et les cartes. */
+    --ciel: radial-gradient(120% 90% at 15% 0%, #1b2a52 0%, #0d1428 45%, #070b18 100%);
+    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #e8703a33 0%, transparent 70%);
+
+    /* Voile posé sur les photographies du héros, pour garder le texte lisible. */
+    --voile-fort: #050914f2;
+    --voile-doux: #050914a6;
+    --voile-nul:  #05091426;
+  }
+
+  [data-theme="clair"] {
+    color-scheme: light;
+
+    --fond:            #f7f5f1;
+    --fond-voile:      #f7f5f1e6;
+    --surface:         #ffffff;
+    --surface-2:       #f2efe9;
+    --surface-3:       #e9e4da;
+    --bordure:         #e2dcd1;
+    --bordure-forte:   #cdc4b4;
+
+    --texte:           #141a2b;
+    --texte-doux:      #58627c;
+    --texte-faible:    #8b93a8;
+
+    --accent:          #c2521e;
+    --accent-fort:     #a94316;
+    --accent-voile:    #c2521e14;
+    --or:              #b8860b;
+    --or-voile:        #b8860b14;
+    --succes:          #14705a;
+    --succes-voile:    #14705a14;
+    --danger:          #bd2038;
+    --danger-voile:    #bd203814;
+
+    --ombre-douce:     0 1px 2px #14192b0d, 0 8px 24px -14px #14192b26;
+    --ombre-forte:     0 2px 4px #14192b12, 0 24px 60px -22px #14192b33;
+    --anneau:          #c2521e40;
+
+    --ciel: radial-gradient(120% 90% at 15% 0%, #dfe7f7 0%, #eef0ef 45%, #f7f5f1 100%);
+    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #c2521e1f 0%, transparent 70%);
+
+    /* En thème clair le voile reste sombre : les photographies retenues sont
+       toutes contrastées, et le titre est écrit en blanc par-dessus. */
+    --voile-fort: #0b1020e6;
+    --voile-doux: #0b102099;
+    --voile-nul:  #0b10201f;
+  }
+}
+
+@theme inline {
+  --color-fond:          var(--fond);
+  --color-surface:       var(--surface);
+  --color-surface-2:     var(--surface-2);
+  --color-surface-3:     var(--surface-3);
+  --color-bordure:       var(--bordure);
+  --color-bordure-forte: var(--bordure-forte);
+  --color-texte:         var(--texte);
+  --color-doux:          var(--texte-doux);
+  --color-faible:        var(--texte-faible);
+  --color-accent:        var(--accent);
+  --color-accent-fort:   var(--accent-fort);
+  --color-or:            var(--or);
+  --color-succes:        var(--succes);
+  --color-danger:        var(--danger);
+
+  --font-titre: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --font-sans:  "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-mono:  "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
+
+  --animate-derive-lente:  derive 90s linear infinite;
+  --animate-derive-rapide: derive 55s linear infinite;
+  --animate-scintille:     scintille 4s ease-in-out infinite;
+  --animate-flotte:        flotte 7s ease-in-out infinite;
+  --animate-pulse-douce:   pulse-douce 3s ease-in-out infinite;
+  --animate-balayage:      balayage 2.2s linear infinite;
+}
+
+@keyframes derive {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes scintille {
+  0%, 100% { opacity: 0.25; }
+  50%      { opacity: 1; }
+}
+
+@keyframes flotte {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-10px) rotate(-1.2deg); }
+}
+
+@keyframes pulse-douce {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.06); }
+}
+
+/* Ken Burns : zoom et translation lents sur les photographies du héros. */
+@keyframes kenburns {
+  0%   { transform: scale(1.06) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.16) translate3d(-1.5%, -1%, 0); }
+  100% { transform: scale(1.06) translate3d(0, 0, 0); }
+}
+
+@keyframes balayage {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(200%); }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Le changement de thème doit être franc, pas clignotant. */
+body, header, section, article, aside, .transition-theme {
+  transition: background-color 260ms ease, border-color 260ms ease, color 160ms ease;
+}
+
+::selection { background: var(--accent); color: #fff; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Barres de défilement discrètes, accordées au thème. */
+* { scrollbar-width: thin; scrollbar-color: var(--bordure-forte) transparent; }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: var(--bordure-forte);
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+/* ==========================================================================
+   Utilitaires maison
+   ========================================================================== */
+
+/* Surface translucide façon verre dépoli, pour l'en-tête et les cartes du héros. */
+.verre {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Texte en dégradé pour les titres d'accroche. */
+.texte-degrade {
+  background: linear-gradient(100deg, var(--texte) 10%, var(--accent) 55%, var(--or) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Éléments de décor réservés à un thème (étoiles la nuit, soleil le jour). */
+.nuit-seulement { opacity: 1;  transition: opacity 400ms ease; }
+.jour-seulement { opacity: 0;  transition: opacity 400ms ease; }
+[data-theme="clair"] .nuit-seulement { opacity: 0; }
+[data-theme="clair"] .jour-seulement { opacity: 1; }
+
+/* Effet de chargement pour les blocs en attente de données. */
+.squelette {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.squelette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--texte) 8%, transparent), transparent);
+  animation: var(--animate-balayage);
+}
+
+/* ==========================================================================
+   Accessibilité — respect de « réduire les animations »
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Impression — EF-6.4, la carte d'embarquement sort en noir sur blanc
+   ========================================================================== */
+
+@media print {
+  .sans-impression { display: none !important; }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .carte-imprimable {
+    box-shadow: none !important;
+    border: 1px solid #999 !important;
+    background: #fff !important;
+    color: #000 !important;
+    page-break-inside: avoid;
+  }
+}

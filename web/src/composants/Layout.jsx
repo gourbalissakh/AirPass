@@ -18,7 +18,9 @@ export default function Layout({ children, utilisateur, surDeconnexion, theme, s
   const [defile, setDefile] = useState(false)
   const [menuOuvert, setMenuOuvert] = useState(false)
 
-  const pleineLargeur = pathname === '/'
+  // L'accueil et la connexion du personnel vont au bord de l'écran : le héros
+  // de l'un et l'écran scindé de l'autre se glissent sous l'en-tête.
+  const pleineLargeur = pathname === '/' || pathname === '/personnel'
 
   useEffect(() => {
     const surDefilement = () => setDefile(window.scrollY > 8)

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { ConciergeBell, LayoutDashboard, LogOut, Menu, RadioTower } from 'lucide-react'
 import { definirJeton } from '../api'
 import Logo from './Logo'
 import BasculeTheme from './BasculeTheme'
@@ -29,13 +30,13 @@ export default function ConsoleLayout({ children, utilisateur, surDeconnexion, t
   const sections = [
     {
       titre: 'Escale',
-      liens: [{ to: '/guichet', libelle: "Comptoir d'enregistrement", icone: <IconeComptoir /> }],
+      liens: [{ to: '/guichet', libelle: "Comptoir d'enregistrement", icone: ConciergeBell }],
     },
     ...(estAdmin ? [{
       titre: 'Exploitation',
       liens: [
-        { to: '/admin', libelle: 'Tableau de bord', icone: <IconeTableau /> },
-        { to: '/admin/vols', libelle: 'Programme des vols', icone: <IconeVols /> },
+        { to: '/admin', libelle: 'Tableau de bord', icone: LayoutDashboard },
+        { to: '/admin/vols', libelle: 'Programme des vols', icone: RadioTower },
       ],
     }] : []),
   ]
@@ -80,25 +81,37 @@ export default function ConsoleLayout({ children, utilisateur, surDeconnexion, t
                 {s.titre}
               </p>
               <ul className="space-y-0.5">
-                {s.liens.map((l) => (
-                  <li key={l.to}>
-                    <NavLink
-                      to={l.to}
-                      end
-                      className={({ isActive }) =>
-                        `flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] font-semibold
-                         transition ${
-                          isActive
-                            ? 'bg-[var(--accent-voile)] text-accent'
-                            : 'text-doux hover:bg-surface-2 hover:text-texte'
-                        }`
-                      }
-                    >
-                      <span className="shrink-0">{l.icone}</span>
-                      <span className="truncate">{l.libelle}</span>
-                    </NavLink>
-                  </li>
-                ))}
+                {s.liens.map((l) => {
+                  const Icone = l.icone
+                  return (
+                    <li key={l.to}>
+                      <NavLink
+                        to={l.to}
+                        end
+                        className={({ isActive }) =>
+                          `group relative flex items-center gap-3 rounded-lg px-3 py-2.5
+                           text-[13px] font-semibold transition ${
+                            isActive
+                              ? 'bg-[var(--accent-voile)] text-accent'
+                              : 'text-doux hover:bg-surface-2 hover:text-texte'
+                          }`
+                        }
+                      >
+                        {({ isActive }) => (
+                          <>
+                            {/* Repère vertical de l'onglet courant. */}
+                            <span
+                              className={`absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-accent
+                                          transition-opacity ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                            />
+                            <Icone size={17} strokeWidth={2} className="shrink-0" />
+                            <span className="truncate">{l.libelle}</span>
+                          </>
+                        )}
+                      </NavLink>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           ))}
@@ -120,7 +133,7 @@ export default function ConsoleLayout({ children, utilisateur, surDeconnexion, t
               aria-label="Se déconnecter"
               className="shrink-0 rounded-md p-1.5 text-faible transition hover:bg-surface-3 hover:text-danger"
             >
-              <IconeSortie />
+              <LogOut size={16} strokeWidth={2} />
             </button>
           </div>
         </div>
@@ -136,8 +149,7 @@ export default function ConsoleLayout({ children, utilisateur, surDeconnexion, t
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-bordure
                        text-texte transition hover:border-bordure-forte lg:hidden"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              strokeWidth="2.4" strokeLinecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+            <Menu size={18} strokeWidth={2.4} />
           </button>
 
           <h1 className="truncate font-titre text-base font-bold">{titre}</h1>
@@ -180,46 +192,5 @@ function Horloge() {
       <span className="font-mono text-[13px] font-semibold tabular-nums">{heure}</span>
       <span className="text-[10px] font-bold uppercase tracking-wider text-faible">OUA</span>
     </span>
-  )
-}
-
-/* -------------------------------------------------------------------------- */
-
-const t = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }
-
-function IconeComptoir() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 24 24" {...t}>
-      <path d="M3 13h18M4.5 13V9.5A2.5 2.5 0 0 1 7 7h10a2.5 2.5 0 0 1 2.5 2.5V13M6 13v6M18 13v6" />
-      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" />
-    </svg>
-  )
-}
-
-function IconeTableau() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 24 24" {...t}>
-      <rect x="3" y="3" width="7.5" height="9" rx="1.6" />
-      <rect x="13.5" y="3" width="7.5" height="5.5" rx="1.6" />
-      <rect x="3" y="15" width="7.5" height="6" rx="1.6" />
-      <rect x="13.5" y="11.5" width="7.5" height="9.5" rx="1.6" />
-    </svg>
-  )
-}
-
-function IconeVols() {
-  return (
-    <svg width="17" height="17" viewBox="0 0 24 24" {...t}>
-      <path d="M17.8 19.2 16 11l3.5-3.5a2.1 2.1 0 0 0-3-3L13 8 4.8 6.2a.6.6 0 0 0-.6 1L9 11l-3 3H4l-.8 1.6 2.6 1.6 1.6 2.6L9 19v-2l3-3 3.8 4.8a.6.6 0 0 0 1-.6Z" />
-    </svg>
-  )
-}
-
-function IconeSortie() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" {...t}>
-      <path d="M15 17v1.5A2.5 2.5 0 0 1 12.5 21h-6A2.5 2.5 0 0 1 4 18.5v-13A2.5 2.5 0 0 1 6.5 3h6A2.5 2.5 0 0 1 15 5.5V7" />
-      <path d="M10 12h11M18 9l3 3-3 3" />
-    </svg>
   )
 }

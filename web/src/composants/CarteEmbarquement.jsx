@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import QRCode from 'qrcode'
+import { PlaneTakeoff } from 'lucide-react'
 import Logo from './Logo'
 import { enDate, enDateHeure, enHeure, ville } from '../format'
 
@@ -56,7 +57,7 @@ export default function CarteEmbarquement({ carte }) {
         <div className="space-y-6 p-6">
           <div className="flex items-end gap-5">
             <Escale code={vol.origine} heure={vol.depart_effectif} />
-            <span className="pb-7 text-2xl text-accent" aria-hidden="true">✈</span>
+            <PlaneTakeoff size={24} strokeWidth={2} className="mb-8 shrink-0 text-accent" aria-hidden="true" />
             <Escale code={vol.destination} />
           </div>
 

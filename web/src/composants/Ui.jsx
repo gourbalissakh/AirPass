@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Check, CircleAlert, CircleCheck, Info, TriangleAlert } from 'lucide-react'
 
 /* ==========================================================================
    Boutons
@@ -129,7 +130,7 @@ export function Bascule({ label, description, ...props }) {
    Conteneurs
    ========================================================================== */
 
-export function Carte({ titre, action, children, className = '', padding = 'p-5 sm:p-6' }) {
+export function Carte({ titre, icone: Icone, action, children, className = '', padding = 'p-5 sm:p-6' }) {
   return (
     <section
       className={`rounded-2xl border border-bordure bg-surface shadow-[var(--ombre-douce)]
@@ -137,7 +138,9 @@ export function Carte({ titre, action, children, className = '', padding = 'p-5 
     >
       {(titre || action) && (
         <header className="flex items-center justify-between gap-3 border-b border-bordure px-5 py-3.5 sm:px-6">
-          <h2 className="font-titre text-[13px] font-bold uppercase tracking-[0.12em] text-doux">
+          <h2 className="flex items-center gap-2 font-titre text-[13px] font-bold uppercase
+                         tracking-[0.12em] text-doux">
+            {Icone && <Icone size={15} strokeWidth={2.2} className="text-accent" />}
             {titre}
           </h2>
           {action}
@@ -163,30 +166,23 @@ export function CarteVedette({ children, className = '' }) {
    ========================================================================== */
 
 const TONS = {
-  info:  { bord: 'border-accent/35',  fond: 'bg-[var(--accent-voile)]', txt: 'text-texte',   icone: 'i' },
-  succes:{ bord: 'border-succes/35',  fond: 'bg-[var(--succes-voile)]', txt: 'text-texte',   icone: '✓' },
-  avertissement: { bord: 'border-or/40', fond: 'bg-[var(--or-voile)]',  txt: 'text-texte',   icone: '!' },
-  erreur:{ bord: 'border-danger/40',  fond: 'bg-[var(--danger-voile)]', txt: 'text-texte',   icone: '!' },
+  info:          { bord: 'border-accent/35', fond: 'bg-[var(--accent-voile)]', teinte: 'text-accent', icone: Info },
+  succes:        { bord: 'border-succes/35', fond: 'bg-[var(--succes-voile)]', teinte: 'text-succes', icone: CircleCheck },
+  avertissement: { bord: 'border-or/40',     fond: 'bg-[var(--or-voile)]',     teinte: 'text-or',     icone: TriangleAlert },
+  erreur:        { bord: 'border-danger/40', fond: 'bg-[var(--danger-voile)]', teinte: 'text-danger', icone: CircleAlert },
 }
 
 export function Alerte({ ton = 'info', titre, children }) {
   if (!children && !titre) return null
   const s = TONS[ton]
+  const Icone = s.icone
 
   return (
-    <div role="alert" className={`flex gap-3 rounded-xl border px-4 py-3.5 text-sm ${s.bord} ${s.fond} ${s.txt}`}>
-      <span
-        className={`mt-px flex h-5 w-5 shrink-0 items-center justify-center rounded-full
-          text-[11px] font-black ${
-            ton === 'erreur' ? 'bg-danger text-white'
-            : ton === 'avertissement' ? 'bg-or text-[#221a04]'
-            : ton === 'succes' ? 'bg-succes text-white'
-            : 'bg-accent text-white'
-          }`}
-        aria-hidden="true"
-      >
-        {s.icone}
-      </span>
+    <div
+      role="alert"
+      className={`flex gap-3 rounded-xl border px-4 py-3.5 text-sm text-texte ${s.bord} ${s.fond}`}
+    >
+      <Icone size={18} strokeWidth={2.1} className={`mt-px shrink-0 ${s.teinte}`} aria-hidden="true" />
       <span className="leading-relaxed">
         {titre && <strong className="mb-0.5 block font-semibold">{titre}</strong>}
         {children}
@@ -237,7 +233,7 @@ export function FilEtapes({ etapes, courante }) {
                       : 'border border-bordure bg-surface-2 text-faible'
                 }`}
             >
-              {etat === 'faite' ? '✓' : i + 1}
+              {etat === 'faite' ? <Check size={15} strokeWidth={3} /> : i + 1}
             </span>
             <span
               className={`text-[13px] font-semibold ${
@@ -316,12 +312,96 @@ export function Squelette({ className = 'h-4 w-full' }) {
   return <div className={`squelette rounded-lg ${className}`} />
 }
 
-/** État vide, neutre et explicite. */
-export function Vide({ titre, children }) {
+/** État vide, neutre et explicite. Une icône le rend moins sec. */
+export function Vide({ titre, icone: Icone, children }) {
   return (
     <div className="py-10 text-center">
+      {Icone && (
+        <span className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-xl
+                         bg-surface-2 text-faible">
+          <Icone size={20} strokeWidth={1.9} />
+        </span>
+      )}
       <p className="font-titre text-base font-semibold text-doux">{titre}</p>
       {children && <p className="mx-auto mt-1.5 max-w-sm text-sm text-faible">{children}</p>}
+    </div>
+  )
+}
+
+/* ==========================================================================
+   En-tête de page
+   ========================================================================== */
+
+/**
+ * Titre de page du site public : pastille d'icône, titre, sous-titre, et
+ * une action facultative alignée à droite. Il donne aux écrans secondaires
+ * la même entrée en matière qu'à la page d'accueil, en plus sobre.
+ */
+export function EnTetePage({ icone: Icone, surtitre, titre, children, action }) {
+  return (
+    <header className="mb-8 flex flex-wrap items-start justify-between gap-4">
+      <div className="min-w-0">
+        {(Icone || surtitre) && (
+          <span className="mb-4 flex items-center gap-2.5">
+            {Icone && (
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl
+                               bg-[var(--accent-voile)] text-accent">
+                <Icone size={19} strokeWidth={2} />
+              </span>
+            )}
+            {surtitre && (
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-faible">
+                {surtitre}
+              </span>
+            )}
+          </span>
+        )}
+        <h1 className="font-titre text-3xl font-extrabold tracking-tight sm:text-[2.4rem]">
+          {titre}
+        </h1>
+        {children && <p className="mt-3 max-w-xl leading-relaxed text-doux">{children}</p>}
+      </div>
+      {action}
+    </header>
+  )
+}
+
+/* ==========================================================================
+   Indicateur chiffré
+   ========================================================================== */
+
+/**
+ * Tuile de chiffre du back-office : libellé, valeur en grand, icône, et une
+ * ligne de détail. `vedette` la teinte pour désigner l'indicateur principal
+ * de l'écran — il n'y en a qu'un.
+ */
+export function CarteChiffre({ label, valeur, suffixe = '', icone: Icone, detail, vedette = false }) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-2xl border p-5 transition-theme ${
+        vedette
+          ? 'border-accent/35 bg-[var(--accent-voile)]'
+          : 'border-bordure bg-surface shadow-[var(--ombre-douce)]'
+      }`}
+    >
+      <div className="flex items-start justify-between gap-3">
+        <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-faible">{label}</p>
+        {Icone && (
+          <Icone
+            size={17}
+            strokeWidth={2}
+            className={vedette ? 'shrink-0 text-accent' : 'shrink-0 text-faible'}
+          />
+        )}
+      </div>
+
+      <p className={`mt-2 font-titre text-[2.4rem] font-extrabold leading-none tabular-nums ${
+        vedette ? 'text-accent' : 'text-texte'
+      }`}>
+        {valeur}<span className="text-xl">{suffixe}</span>
+      </p>
+
+      {detail && <div className="mt-3 text-[11px] leading-snug text-faible">{detail}</div>}
     </div>
   )
 }

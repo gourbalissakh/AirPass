@@ -70,13 +70,29 @@ blanc, encre brune plutôt que noir, ombres teintées de terre, et teintes
 d'accent assombries pour tenir le contraste AA (terre cuite 5,6:1 · or
 4,6:1 · vert 5,2:1 · rouge 6,1:1).
 
-Polices : **Bricolage Grotesque** pour les titres, **Plus Jakarta Sans**
-pour le texte, **JetBrains Mono** pour les codes (PNR, références, codes
-OACI).
+Polices : **Sora** pour les titres — grotesque géométrique, large, qui tient
+le très grand corps sans maniérisme ; **Inter** pour le texte courant et les
+écrans denses, avec ses chiffres alignés indispensables aux tableaux du
+back-office ; **JetBrains Mono** pour les codes (PNR, références, codes OACI).
 
 Logo : un « E » couché — trois barres inclinées de 18°, la première
 terminée en pointe, les suivantes en traînée. Tracé dans
 `web/src/composants/Logo.jsx` et `web/public/favicon.svg`.
+
+Iconographie : **lucide-react** partout, y compris dans les écrans
+d'exploitation. Aucun caractère typographique n'est utilisé comme icône —
+un « ✈ » ou un « ▤ » ne se met pas à l'échelle et change de dessin d'une
+plateforme à l'autre.
+
+Deux utilitaires méritent d'être connus avant de toucher au CSS :
+
+- `.sur-photo` — pour tout texte posé sur une image. Le voile est sombre
+  dans les deux thèmes, donc les jetons y repassent en version « nuit ».
+  L'utilitaire réaffecte aussi `color` : `body` transmet une couleur déjà
+  calculée, et redéfinir `--texte` sur un descendant ne la recalcule pas.
+- `.anime-centre` — pour toute forme SVG animée en échelle ou en rotation.
+  Sans `transform-box: fill-box`, un `scale` se rapporte à l'origine du
+  repère et déplace la forme au lieu de la faire respirer sur place.
 
 ## Médias
 

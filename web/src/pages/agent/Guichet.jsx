@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { PlaneTakeoff, ScanLine, Search, Users } from 'lucide-react'
 import { api, messageErreur } from '../../api'
 import { Alerte, Bouton, Champ, Etiquette, Vide } from '../../composants/Ui'
 import { enDateHeure, enHeure, initiales, LIBELLE_STATUT_DOSSIER, ville } from '../../format'
@@ -113,7 +114,7 @@ function BarreRecherche({ champRef, requete, setRequete, surRecherche, occupe })
     >
       <span className="relative min-w-[16rem] flex-1">
         <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-faible">
-          <IconeScan />
+          <ScanLine size={19} strokeWidth={1.9} />
         </span>
         <input
           ref={champRef}
@@ -134,6 +135,7 @@ function BarreRecherche({ champRef, requete, setRequete, surRecherche, occupe })
       </span>
 
       <Bouton type="submit" taille="lg" chargement={occupe} className="h-14 px-8">
+        <Search size={17} strokeWidth={2.3} />
         Rechercher
       </Bouton>
     </form>
@@ -146,7 +148,7 @@ function Liste({ resultats, ouverte, surOuverture }) {
   if (!resultats) {
     return (
       <section className="rounded-2xl border border-bordure bg-surface p-8">
-        <Vide titre="Prêt à scanner">
+        <Vide titre="Prêt à scanner" icone={ScanLine}>
           Passez la carte d'embarquement devant le lecteur, ou tapez un nom.
           La touche <kbd className="rounded border border-bordure px-1 font-mono text-[11px]">/</kbd>
           {' '}ramène le curseur dans le champ à tout moment.
@@ -161,7 +163,7 @@ function Liste({ resultats, ouverte, surOuverture }) {
   if (total === 0) {
     return (
       <section className="rounded-2xl border border-bordure bg-surface p-8">
-        <Vide titre="Aucun passager trouvé">
+        <Vide titre="Aucun passager trouvé" icone={Users}>
           Vérifiez l'orthographe, ou essayez le numéro de dossier plutôt que le nom.
         </Vide>
       </section>
@@ -252,7 +254,7 @@ function Detail({ dossier, occupe, agir }) {
     return (
       <section className="hidden rounded-2xl border border-dashed border-bordure
                           bg-surface/50 p-10 xl:block">
-        <Vide titre="Aucun dossier ouvert">
+        <Vide titre="Aucun dossier ouvert" icone={PlaneTakeoff}>
           Sélectionnez un passager à gauche pour voir son siège, ses bagages
           déclarés et les actions du comptoir.
         </Vide>
@@ -435,14 +437,3 @@ function ActionsComptoir({ carte, occupe, agir, embarque }) {
   )
 }
 
-/* -------------------------------------------------------------------------- */
-
-function IconeScan() {
-  return (
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M3 8V5.5A2.5 2.5 0 0 1 5.5 3H8M16 3h2.5A2.5 2.5 0 0 1 21 5.5V8M21 16v2.5a2.5 2.5 0 0 1-2.5 2.5H16M8 21H5.5A2.5 2.5 0 0 1 3 18.5V16" />
-      <path d="M7 12h10" />
-    </svg>
-  )
-}

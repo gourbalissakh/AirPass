@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { PlaneTakeoff } from 'lucide-react'
 import { api, messageErreur } from '../../api'
 import { Alerte, Bascule, Bouton, Carte, Champ, Donnee, Etiquette, FilEtapes, Squelette } from '../../composants/Ui'
 import PlanCabine from '../../composants/PlanCabine'
@@ -74,20 +75,41 @@ function EnTeteVol({ dossier }) {
   const vol = dossier.vol
 
   return (
-    <div
-      className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl px-6 py-5 text-white"
-      style={{ background: 'linear-gradient(115deg, var(--accent-fort), var(--accent) 55%, var(--or))' }}
-    >
-      <div>
-        <p className="font-titre text-xl font-extrabold">
-          {vol.numero} · {ville(vol.origine)} → {ville(vol.destination)}
+    <div className="grain relative isolate mb-8 overflow-hidden rounded-2xl">
+      <img
+        src="/images/cabine/hublot.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: '50% 45%' }}
+      />
+      <span
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(105deg, var(--voile-fort) 0%, var(--voile-fort) 42%, var(--voile-doux) 100%)',
+        }}
+      />
+
+      <div className="sur-photo relative flex flex-wrap items-center justify-between gap-4 px-6 py-6">
+        <div className="min-w-0">
+          <span className="flex items-center gap-2 text-[10px] font-bold uppercase
+                           tracking-[0.2em] text-faible">
+            <PlaneTakeoff size={14} strokeWidth={2.2} />
+            Enregistrement en ligne
+          </span>
+          <p className="mt-2 font-titre text-xl font-extrabold text-texte sm:text-2xl">
+            {vol.numero} · {ville(vol.origine)} → {ville(vol.destination)}
+          </p>
+          <p className="mt-1 text-sm text-doux">{enDateHeure(vol.depart_effectif)}</p>
+        </div>
+        <p className="shrink-0 text-sm">
+          <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-faible">
+            Référence
+          </span>
+          <span className="font-mono text-base font-bold text-texte">{dossier.reference}</span>
         </p>
-        <p className="mt-0.5 text-sm opacity-90">{enDateHeure(vol.depart_effectif)}</p>
       </div>
-      <p className="text-sm">
-        <span className="block text-[10px] font-bold uppercase tracking-[0.18em] opacity-85">Référence</span>
-        <span className="font-mono text-base font-bold">{dossier.reference}</span>
-      </p>
     </div>
   )
 }

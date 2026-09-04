@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { ChevronRight, PlaneTakeoff, Plus } from 'lucide-react'
 import { api, messageErreur } from '../../api'
 import { Alerte, Bouton, Champ, Etiquette, Selecteur, Squelette, Vide } from '../../composants/Ui'
 import { FriseEnregistrement, Jauge } from '../../composants/Graphiques'
@@ -56,7 +57,10 @@ export default function Vols() {
         <p className="text-[13px] text-doux">
           {vols ? vols.length + ' vol(s) programmé(s)' : 'Chargement…'}
         </p>
-        <Bouton onClick={() => setVoletCreation(true)}>+ Programmer un vol</Bouton>
+        <Bouton onClick={() => setVoletCreation(true)}>
+          <Plus size={16} strokeWidth={2.4} />
+          Programmer un vol
+        </Bouton>
       </div>
 
       {erreur && <Alerte ton="erreur">{erreur}</Alerte>}
@@ -66,7 +70,7 @@ export default function Vols() {
         <Squelette className="h-96 rounded-2xl" />
       ) : vols.length === 0 ? (
         <section className="rounded-2xl border border-bordure bg-surface p-10">
-          <Vide titre="Aucun vol programmé">
+          <Vide titre="Aucun vol programmé" icone={PlaneTakeoff}>
             Créez un premier vol : ses sièges seront générés automatiquement
             à partir du plan de cabine de l'appareil.
           </Vide>
@@ -135,7 +139,11 @@ function LigneVol({ vol, occupe, agir, ouvert, surBascule }) {
       >
         <td className="px-5 py-3.5">
           <span className="flex items-center gap-2.5">
-            <span className={'text-faible transition-transform ' + (ouvert ? 'rotate-90' : '')}>›</span>
+            <ChevronRight
+              size={16}
+              strokeWidth={2.4}
+              className={'shrink-0 text-faible transition-transform ' + (ouvert ? 'rotate-90' : '')}
+            />
             <span>
               <span className="block font-titre text-[15px] font-bold">{vol.numero_vol}</span>
               <span className="block font-mono text-[11px] text-faible">

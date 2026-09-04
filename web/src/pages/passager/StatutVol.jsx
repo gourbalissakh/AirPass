@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { PlaneTakeoff, RadioTower, Search } from 'lucide-react'
 import { api, messageErreur } from '../../api'
-import { Alerte, Bouton, Carte, Champ, Donnee, Etiquette, Vide } from '../../composants/Ui'
+import { Alerte, Bouton, Carte, Champ, Donnee, EnTetePage, Etiquette, Vide } from '../../composants/Ui'
 import Reveal from '../../composants/Reveal'
 import { enDateHeure, LIBELLE_STATUT_VOL, ville } from '../../format'
 
@@ -26,20 +27,22 @@ export default function StatutVol() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <header className="mb-8">
-        <h1 className="font-titre text-3xl font-extrabold tracking-tight">Statut d'un vol</h1>
-        <p className="mt-2 text-doux">
-          Retard, changement de porte, annulation : l'état de votre vol en direct.
-        </p>
-      </header>
+      <EnTetePage icone={RadioTower} surtitre="En direct" titre="Statut d'un vol">
+        Retard, changement de porte, annulation : l'état de votre vol,
+        tel que l'exploitation vient de le publier.
+      </EnTetePage>
 
       <Carte>
         <form onSubmit={chercher} className="flex flex-wrap items-end gap-3">
           <Champ
             label="Numéro de vol" required placeholder="2J201" className="min-w-[12rem] flex-1"
+            icone={<PlaneTakeoff size={17} strokeWidth={1.9} />}
             value={numero} onChange={(e) => setNumero(e.target.value)}
           />
-          <Bouton type="submit" taille="lg" chargement={occupe}>Consulter</Bouton>
+          <Bouton type="submit" taille="lg" chargement={occupe}>
+            <Search size={17} strokeWidth={2.3} />
+            Consulter
+          </Bouton>
         </form>
       </Carte>
 
@@ -86,7 +89,7 @@ export default function StatutVol() {
 
       {!vol && !erreur && (
         <Carte className="mt-5">
-          <Vide titre="Aucun vol consulté">
+          <Vide titre="Aucun vol consulté" icone={PlaneTakeoff}>
             Saisissez un numéro de vol Air Burkina, par exemple 2J201.
           </Vide>
         </Carte>

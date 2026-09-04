@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import {
+  Activity, ArrowLeftRight, Armchair, BadgeCheck, CircleUser, ClipboardList,
+  ConciergeBell, Gauge, History, Hourglass, PlaneTakeoff, RefreshCw,
+} from 'lucide-react'
 import { api, messageErreur } from '../../api'
-import { Alerte, Bouton, Etiquette, Squelette, Vide } from '../../composants/Ui'
+import { Alerte, Bouton, CarteChiffre, Etiquette, Squelette, Vide } from '../../composants/Ui'
 import { Anneau, FriseEnregistrement, Jauge } from '../../composants/Graphiques'
 import {
   enDuree, enHeure, enJourHeure, enRelatif, familleAction, LIBELLE_FENETRE,
@@ -76,51 +80,41 @@ function Chargement() {
 
 function BandeauSynthese({ synthese: s, rafraichi, surRafraichir }) {
   return (
-    <section className="overflow-hidden rounded-2xl border border-bordure bg-surface">
-      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-bordure px-5 py-3">
-        <h2 className="font-titre text-[13px] font-bold uppercase tracking-[0.12em] text-doux">
+    <section>
+      <header className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <h2 className="flex items-center gap-2 font-titre text-[13px] font-bold uppercase
+                       tracking-[0.12em] text-doux">
+          <Activity size={15} strokeWidth={2.2} className="text-accent" />
           Adoption de l'enregistrement en ligne
         </h2>
         <span className="flex items-center gap-3 text-[11px] text-faible">
           {rafraichi && <span>Actualisé {enRelatif(rafraichi)}</span>}
-          <Bouton variante="fantome" taille="sm" onClick={surRafraichir}>Actualiser</Bouton>
+          <Bouton variante="fantome" taille="sm" onClick={surRafraichir}>
+            <RefreshCw size={14} strokeWidth={2.2} />
+            Actualiser
+          </Bouton>
         </span>
       </header>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4">
-        <Chiffre
-          label="Taux en ligne" valeur={s.taux_en_ligne} suffixe=" %" vedette
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <CarteChiffre
+          vedette label="Taux en ligne" valeur={s.taux_en_ligne} suffixe=" %" icone={Gauge}
           detail={<Jauge valeur={s.taux_en_ligne} />}
         />
-        <Chiffre
-          label="Enregistrés en ligne" valeur={s.enregistrements_en_ligne}
+        <CarteChiffre
+          label="Enregistrés en ligne" valeur={s.enregistrements_en_ligne} icone={BadgeCheck}
           detail={'sur ' + s.enregistrements_total + ' au total'}
         />
-        <Chiffre
-          label="Enregistrés au guichet" valeur={s.enregistrements_guichet}
+        <CarteChiffre
+          label="Enregistrés au guichet" valeur={s.enregistrements_guichet} icone={ConciergeBell}
           detail="traités par un agent"
         />
-        <Chiffre
-          label="Vols publiés" valeur={s.vols_publies}
+        <CarteChiffre
+          label="Vols publiés" valeur={s.vols_publies} icone={PlaneTakeoff}
           detail="à venir sur le réseau"
         />
       </div>
     </section>
-  )
-}
-
-function Chiffre({ label, valeur, suffixe = '', detail, vedette }) {
-  return (
-    <div className={'border-b border-bordure p-5 last:border-b-0 sm:border-r sm:[&:nth-child(2n)]:border-r-0 ' +
-                    'lg:border-b-0 lg:[&:nth-child(2n)]:border-r lg:last:border-r-0 ' +
-                    (vedette ? 'bg-[var(--accent-voile)]' : '')}>
-      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-faible">{label}</p>
-      <p className={'mt-1.5 font-titre text-[2.5rem] font-extrabold leading-none tabular-nums ' +
-                    (vedette ? 'text-accent' : 'text-texte')}>
-        {valeur}<span className="text-xl">{suffixe}</span>
-      </p>
-      <div className="mt-3 text-[11px] text-faible">{detail}</div>
-    </div>
   )
 }
 
@@ -140,7 +134,9 @@ function Fenetres({ vols }) {
   return (
     <section className="rounded-2xl border border-bordure bg-surface">
       <header className="flex items-center justify-between gap-3 border-b border-bordure px-5 py-3">
-        <h2 className="font-titre text-[13px] font-bold uppercase tracking-[0.12em] text-doux">
+        <h2 className="flex items-center gap-2 font-titre text-[13px] font-bold uppercase
+                       tracking-[0.12em] text-doux">
+          <Hourglass size={15} strokeWidth={2.2} className="text-accent" />
           Fenêtres d'enregistrement
         </h2>
         <Link to="/admin/vols" className="text-[12px] font-semibold text-accent hover:underline">
@@ -149,7 +145,7 @@ function Fenetres({ vols }) {
       </header>
 
       {tries.length === 0 ? (
-        <div className="p-6"><Vide titre="Aucun vol à venir" /></div>
+        <div className="p-6"><Vide titre="Aucun vol à venir" icone={PlaneTakeoff} /></div>
       ) : (
         <ul className="divide-y divide-bordure">
           {tries.map((v) => <LigneVol key={v.numero + v.depart} vol={v} />)}
@@ -217,7 +213,9 @@ function Repartition({ synthese: s }) {
   return (
     <section className="rounded-2xl border border-bordure bg-surface">
       <header className="border-b border-bordure px-5 py-3">
-        <h2 className="font-titre text-[13px] font-bold uppercase tracking-[0.12em] text-doux">
+        <h2 className="flex items-center gap-2 font-titre text-[13px] font-bold uppercase
+                       tracking-[0.12em] text-doux">
+          <ClipboardList size={15} strokeWidth={2.2} className="text-accent" />
           Par canal
         </h2>
       </header>
@@ -256,12 +254,12 @@ function Part({ label, valeur, total, couleur }) {
 /* ========================================================================== */
 
 const ICONES_JOURNAL = {
-  enregistrement: { fond: 'bg-[var(--accent-voile)] text-accent', signe: '✓' },
-  guichet:        { fond: 'bg-[var(--or-voile)] text-or',         signe: '▤' },
-  vol:            { fond: 'bg-[var(--succes-voile)] text-succes', signe: '✈' },
-  siege:          { fond: 'bg-surface-3 text-doux',               signe: '▦' },
-  compte:         { fond: 'bg-surface-3 text-doux',               signe: '◍' },
-  dcs:            { fond: 'bg-surface-3 text-faible',             signe: '⇄' },
+  enregistrement: { fond: 'bg-[var(--accent-voile)] text-accent', icone: BadgeCheck },
+  guichet:        { fond: 'bg-[var(--or-voile)] text-or',         icone: ConciergeBell },
+  vol:            { fond: 'bg-[var(--succes-voile)] text-succes', icone: PlaneTakeoff },
+  siege:          { fond: 'bg-surface-3 text-doux',               icone: Armchair },
+  compte:         { fond: 'bg-surface-3 text-doux',               icone: CircleUser },
+  dcs:            { fond: 'bg-surface-3 text-faible',             icone: ArrowLeftRight },
 }
 
 /** Exigence non fonctionnelle « Journalisation / Traçabilité ». */
@@ -269,21 +267,24 @@ function Journal({ entrees }) {
   return (
     <section className="rounded-2xl border border-bordure bg-surface">
       <header className="border-b border-bordure px-5 py-3">
-        <h2 className="font-titre text-[13px] font-bold uppercase tracking-[0.12em] text-doux">
+        <h2 className="flex items-center gap-2 font-titre text-[13px] font-bold uppercase
+                       tracking-[0.12em] text-doux">
+          <History size={15} strokeWidth={2.2} className="text-accent" />
           Journal des actions
         </h2>
       </header>
 
       {entrees.length === 0 ? (
-        <div className="p-5"><Vide titre="Journal vide" /></div>
+        <div className="p-5"><Vide titre="Journal vide" icone={History} /></div>
       ) : (
         <ul className="max-h-[24rem] divide-y divide-bordure overflow-y-auto">
           {entrees.map((l, i) => {
             const style = ICONES_JOURNAL[familleAction(l.action)]
+            const Icone = style.icone
             return (
               <li key={i} className="flex items-start gap-3 px-5 py-3">
-                <span className={'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[12px] ' + style.fond}>
-                  {style.signe}
+                <span className={'mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ' + style.fond}>
+                  <Icone size={14} strokeWidth={2.1} />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-mono text-[12px] font-semibold text-texte">

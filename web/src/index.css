@@ -133,11 +133,12 @@
   --color-danger:        var(--danger);
   --color-ciel-clair:    var(--ciel-clair);
 
-  /* Bricolage Grotesque pour les titres : une grotesque à contrastes marqués,
-     qui tient le très grand corps sans devenir bavarde. Plus Jakarta Sans
-     pour le texte courant, dessinée avec de vraies capitales accentuées. */
-  --font-titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --font-sans:  "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  /* Sora pour les titres : grotesque géométrique, large et posée, qui tient
+     le très grand corps sans maniérisme. Inter pour le texte courant et les
+     écrans denses — c'est la police de référence pour les tableaux et les
+     chiffres alignés. JetBrains Mono pour les codes (PNR, OACI, références). */
+  --font-titre: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-sans:  "Inter", "Segoe UI", system-ui, sans-serif;
   --font-mono:  "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
 
   --animate-derive-lente:  derive 90s linear infinite;
@@ -226,8 +227,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Les titres serrent leur crénage : Bricolage respire beaucoup par défaut. */
-h1, h2, h3 { letter-spacing: -0.022em; }
+/* Sora est déjà large : on resserre juste ce qu'il faut sur les gros corps,
+   et on laisse les petits titres respirer. */
+h1, h2 { letter-spacing: -0.028em; }
+h3     { letter-spacing: -0.015em; }
+
+/* Inter aligne ses chiffres sur demande : indispensable dans les tableaux
+   du back-office, où une colonne de nombres doit rester droite. */
+.tabular-nums, table, .font-mono { font-variant-numeric: tabular-nums; }
 
 /* Le changement de thème doit être franc, pas clignotant. */
 body, header, section, article, aside, .transition-theme {

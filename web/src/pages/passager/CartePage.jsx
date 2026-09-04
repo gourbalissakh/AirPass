@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { ArrowRight, Pencil, Printer, QrCode } from 'lucide-react'
 import { api, messageErreur } from '../../api'
-import { Alerte, Bouton, Squelette } from '../../composants/Ui'
+import { Alerte, Bouton, EnTetePage, Squelette } from '../../composants/Ui'
 import CarteEmbarquement from '../../composants/CarteEmbarquement'
 import Reveal from '../../composants/Reveal'
 
@@ -38,13 +39,10 @@ export default function CartePage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <header className="sans-impression mb-8">
-        <h1 className="font-titre text-3xl font-extrabold tracking-tight">
-          Votre carte d'embarquement
-        </h1>
-        <p className="mt-2 text-doux">
-          Présentez ce QR code au comptoir Air Burkina puis à l'embarquement.
-        </p>
+      <div className="sans-impression">
+        <EnTetePage icone={QrCode} surtitre="Prêt à embarquer" titre="Votre carte d'embarquement">
+          Présentez ce QR code au comptoir Air Burkina, puis à l'embarquement.
+        </EnTetePage>
 
         {horsLigne && (
           <div className="mt-5">
@@ -54,23 +52,28 @@ export default function CartePage() {
             </Alerte>
           </div>
         )}
-      </header>
+      </div>
 
       <Reveal depuis="zoom">
         <CarteEmbarquement carte={carte} />
       </Reveal>
 
       <div className="sans-impression mt-8 flex flex-wrap gap-3">
-        <Bouton taille="lg" onClick={() => window.print()}>Imprimer</Bouton>
+        <Bouton taille="lg" onClick={() => window.print()}>
+          <Printer size={17} strokeWidth={2.2} />
+          Imprimer
+        </Bouton>
         <Bouton variante="secondaire" taille="lg" onClick={() => navigate('/enregistrement/' + jeton)}>
+          <Pencil size={16} strokeWidth={2.2} />
           Modifier mon enregistrement
         </Bouton>
         <Link
           to="/vol"
-          className="inline-flex h-13 items-center px-4 text-sm font-semibold text-accent
-                     transition hover:text-accent-fort"
+          className="inline-flex h-13 items-center gap-1.5 px-4 text-sm font-semibold text-accent
+                     transition hover:gap-2.5 hover:text-accent-fort"
         >
-          Suivre mon vol →
+          Suivre mon vol
+          <ArrowRight size={16} strokeWidth={2.4} />
         </Link>
       </div>
     </div>

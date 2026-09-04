@@ -19,7 +19,7 @@ export default function CartePage() {
   const [erreur, setErreur] = useState(null)
 
   useEffect(() => {
-    const cle = 'airpass.carte.' + jeton
+    const cle = 'envol.carte.' + jeton
 
     api.get('/enregistrement/' + jeton)
       .then(({ data }) => {

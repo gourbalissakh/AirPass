@@ -57,7 +57,7 @@ final class SiegeService
                 'statut' => 'verrouille',
                 'verrou_jeton' => $jetonCourant,
                 'verrou_expire_le' => now()->addMinutes(
-                    config('airpass.verrou_siege_minutes')
+                    config('envol.verrou_siege_minutes')
                 ),
             ]);
 
@@ -81,7 +81,7 @@ final class SiegeService
         }
 
         $age = $reservation->age();
-        $ageMin = config('airpass.issue_secours_age_min');
+        $ageMin = config('envol.issue_secours_age_min');
 
         if ($age !== null && $age < $ageMin) {
             throw new RuntimeException(
@@ -120,7 +120,7 @@ final class SiegeService
                 'statut' => 'verrouille',
                 'verrou_jeton' => $this->jeton($enregistrement),
                 'verrou_expire_le' => now()->addMinutes(
-                    config('airpass.verrou_siege_minutes')
+                    config('envol.verrou_siege_minutes')
                 ),
             ]);
 

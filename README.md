@@ -1,8 +1,10 @@
-# AirPass — plateforme d'enregistrement en ligne
+# Envol — plateforme d'enregistrement en ligne
 
-Prototype répondant au cahier des charges *AirPass* v1.0 rédigé pour
-**Air Burkina** (enregistrement en ligne, choix de siège, déclaration de
-bagages, carte d'embarquement numérique, vue guichet, back-office).
+**Envol** est le nom du service ; **Air Burkina** est la compagnie qui
+l'opère. Le prototype répond au cahier des charges *AirPass* v1.0
+(enregistrement en ligne, choix de siège, déclaration de bagages, carte
+d'embarquement numérique, vue guichet, back-office) — « AirPass » était le
+nom de travail du cahier des charges, « Envol » est celui du produit.
 
 ## Contenu
 
@@ -10,7 +12,7 @@ bagages, carte d'embarquement numérique, vue guichet, back-office).
 |---|---|
 | `api/` | Back-end Laravel — API REST, logique métier, base de données |
 | `web/` | Front-end React (passager, agent guichet, back-office) |
-| `docs/` | Modèle de données, matrice de traçabilité des exigences |
+| `docs/` | Modèle de données, traçabilité des exigences, crédits médias |
 
 ## Démarrage
 
@@ -50,6 +52,42 @@ npm run dev
 Le **mode invité** (EF-1.3) ne demande aucun compte : numéro de vol +
 numéro de passeport suffisent.
 
+## Identité visuelle
+
+Le système de design vit dans un seul fichier, `web/src/index.css`. Deux
+thèmes complets y sont définis en variables CSS, exposées à Tailwind par
+`@theme inline` — on bascule de l'un à l'autre sans recompiler.
+
+| | Sombre | Clair |
+|---|---|---|
+| Fond | `#0a0f1f` | `#fbf8f3` (ivoire chaud) |
+| Texte | `#edf2ff` | `#1c1710` (encre brune) |
+| Terre cuite | `#f26b3a` | `#c2451a` |
+| Or | `#ffc24b` | `#a8730b` |
+
+Le thème clair n'est pas le négatif du sombre : fond ivoire plutôt que
+blanc, encre brune plutôt que noir, ombres teintées de terre, et teintes
+d'accent assombries pour tenir le contraste AA (terre cuite 5,6:1 · or
+4,6:1 · vert 5,2:1 · rouge 6,1:1).
+
+Polices : **Bricolage Grotesque** pour les titres, **Plus Jakarta Sans**
+pour le texte, **JetBrains Mono** pour les codes (PNR, références, codes
+OACI).
+
+Logo : un « E » couché — trois barres inclinées de 18°, la première
+terminée en pointe, les suivantes en traînée. Tracé dans
+`web/src/composants/Logo.jsx` et `web/public/favicon.svg`.
+
+## Médias
+
+Toutes les photographies et la vidéo viennent de Wikimedia Commons et sont
+réutilisables. L'attribution exigée par les licences CC BY / CC BY-SA est
+tenue dans [`docs/credits-photos.md`](docs/credits-photos.md).
+
+L'inventaire des visuels — chemins, légendes, cadrage — est centralisé
+dans `web/src/medias.js` : les composants y puisent au lieu de coder les
+fichiers en dur.
+
 ## Périmètre du prototype
 
 Ce prototype couvre les exigences de priorité **Haute** du cahier des
@@ -58,6 +96,14 @@ charges. L'état exigence par exigence est tenu à jour dans
 
 Conformément au §8.2 du cahier des charges, l'accès au DCS réel d'Air
 Burkina n'étant pas disponible, le prototype fonctionne avec une base de
-vols et de réservations gérée par AirPass. L'interface `DcsGateway`
-isole ce choix : brancher le DCS réel ne demandera qu'une nouvelle
-implémentation de cette interface.
+vols et de réservations gérée par Envol. L'interface `DcsGateway` isole ce
+choix : brancher le DCS réel ne demandera qu'une nouvelle implémentation de
+cette interface.
+
+## Tests
+
+```bash
+cd api && php artisan test     # 46 tests, 165 assertions
+cd web && npm run build        # compilation de production
+cd web && npm run lint         # oxlint
+```

@@ -1,93 +1,118 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   AirPass — système de design « nuit sahélienne »
+   Envol — système de design « Sahel réchauffé »
    --------------------------------------------------------------------------
-   Bleu nuit profond (le ciel au-dessus du Sahel), terre cuite et or (la
-   latérite et la lumière rasante), vert d'eau pour les validations.
+   Deux ambiances, une même âme :
 
-   Tous les jetons sont définis deux fois — thème sombre puis thème clair —
-   et exposés à Tailwind via `@theme inline`, ce qui permet de basculer d'un
-   thème à l'autre à chaud, sans recompiler.
+   · Sombre — la nuit sahélienne. Bleu d'encre profond, terre cuite chaude,
+     or de latérite. C'est le thème par défaut, celui du héros vidéo.
+   · Clair  — le plein jour. Ivoire chaud plutôt que blanc clinique, encre
+     brune plutôt que noir pur, ombres teintées de terre. Il est construit
+     pour lui-même : ce n'est pas le négatif du sombre.
+
+   Tous les jetons existent dans les deux thèmes et sont exposés à Tailwind
+   via `@theme inline`, ce qui permet de basculer à chaud sans recompiler.
    ========================================================================== */
 
 @layer base {
   :root {
     color-scheme: dark;
 
-    --fond:            #070b18;
-    --fond-voile:      #070b18e6;
-    --surface:         #0e1526;
-    --surface-2:       #161f35;
-    --surface-3:       #1e2942;
-    --bordure:         #26314c;
-    --bordure-forte:   #384668;
+    /* ---- Fonds et surfaces ---------------------------------------------- */
+    --fond:            #0a0f1f;
+    --fond-voile:      #0a0f1fe6;
+    --surface:         #111829;
+    --surface-2:       #19233a;
+    --surface-3:       #223050;
+    --bordure:         #283654;
+    --bordure-forte:   #3b4d75;
 
-    --texte:           #eaf0ff;
-    --texte-doux:      #97a5c4;
-    --texte-faible:    #63719a;
+    /* ---- Texte ---------------------------------------------------------- */
+    --texte:           #edf2ff;
+    --texte-doux:      #9dabc9;
+    --texte-faible:    #6a789e;
 
-    --accent:          #e8703a;   /* terre cuite */
-    --accent-fort:     #f08850;
-    --accent-voile:    #e8703a1f;
-    --or:              #f5b72c;
-    --or-voile:        #f5b72c1f;
+    /* ---- Couleurs de marque --------------------------------------------- */
+    --accent:          #f26b3a;   /* terre cuite */
+    --accent-fort:     #ff8355;
+    --accent-voile:    #f26b3a22;
+    --or:              #ffc24b;
+    --or-voile:        #ffc24b1f;
     --succes:          #2fb89a;
     --succes-voile:    #2fb89a1f;
     --danger:          #f0546b;
     --danger-voile:    #f0546b1f;
+    --ciel-clair:      #58c8ff;
 
+    /* ---- Élévation ------------------------------------------------------- */
     --ombre-douce:     0 1px 2px #0006, 0 8px 24px -12px #000a;
     --ombre-forte:     0 2px 4px #0008, 0 24px 60px -20px #000c;
-    --anneau:          #e8703a55;
+    --ombre-marque:    0 18px 50px -18px #f26b3a66;
+    --anneau:          #f26b3a55;
 
-    /* Dégradés réutilisés par le héros et les cartes. */
-    --ciel: radial-gradient(120% 90% at 15% 0%, #1b2a52 0%, #0d1428 45%, #070b18 100%);
-    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #e8703a33 0%, transparent 70%);
+    /* ---- Décors ---------------------------------------------------------- */
+    --ciel: radial-gradient(120% 90% at 15% 0%, #1d2b55 0%, #101836 45%, #0a0f1f 100%);
+    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #f26b3a33 0%, transparent 70%);
+    --lueur-or:     radial-gradient(60% 60% at 50% 50%, #ffc24b2b 0%, transparent 70%);
+    --degrade-marque: linear-gradient(120deg, #ff8355 0%, #f26b3a 45%, #ffc24b 100%);
+    --grille: #ffffff0a;
 
-    /* Voile posé sur les photographies du héros, pour garder le texte lisible. */
-    --voile-fort: #050914f2;
-    --voile-doux: #050914a6;
-    --voile-nul:  #05091426;
+    /* Voile posé sur les photographies et la vidéo, pour garder le texte lisible. */
+    --voile-fort: #060a17f2;
+    --voile-doux: #060a17a6;
+    --voile-nul:  #060a1726;
   }
 
   [data-theme="clair"] {
     color-scheme: light;
 
-    --fond:            #f7f5f1;
-    --fond-voile:      #f7f5f1e6;
+    /* Ivoire chaud, pas blanc d'imprimante : la page doit rester douce à
+       l'œil sous la lumière franche, et les photographies s'y posent sans
+       cerne bleuté. */
+    --fond:            #fbf8f3;
+    --fond-voile:      #fbf8f3e8;
     --surface:         #ffffff;
-    --surface-2:       #f2efe9;
-    --surface-3:       #e9e4da;
-    --bordure:         #e2dcd1;
-    --bordure-forte:   #cdc4b4;
+    --surface-2:       #f4eee4;
+    --surface-3:       #eae1d3;
+    --bordure:         #e6dccb;
+    --bordure-forte:   #c9b99e;
 
-    --texte:           #141a2b;
-    --texte-doux:      #58627c;
-    --texte-faible:    #8b93a8;
+    /* Encre brune : le noir pur vibre sur l'ivoire, le brun se pose. */
+    --texte:           #1c1710;
+    --texte-doux:      #574c3d;
+    --texte-faible:    #8a7d6a;
 
-    --accent:          #c2521e;
-    --accent-fort:     #a94316;
-    --accent-voile:    #c2521e14;
-    --or:              #b8860b;
-    --or-voile:        #b8860b14;
-    --succes:          #14705a;
-    --succes-voile:    #14705a14;
-    --danger:          #bd2038;
-    --danger-voile:    #bd203814;
+    /* Teintes assombries pour tenir le contraste AA sur fond clair
+       (terre cuite 5,6:1 · or 4,6:1 · vert 5,2:1 · rouge 6,1:1). */
+    --accent:          #c2451a;
+    --accent-fort:     #a2380f;
+    --accent-voile:    #c2451a14;
+    --or:              #a8730b;
+    --or-voile:        #a8730b14;
+    --succes:          #0f6b57;
+    --succes-voile:    #0f6b5714;
+    --danger:          #b3261e;
+    --danger-voile:    #b3261e14;
+    --ciel-clair:      #0c6e9e;
 
-    --ombre-douce:     0 1px 2px #14192b0d, 0 8px 24px -14px #14192b26;
-    --ombre-forte:     0 2px 4px #14192b12, 0 24px 60px -22px #14192b33;
-    --anneau:          #c2521e40;
+    /* Ombres teintées de terre : une ombre grise sur un fond chaud sonne faux. */
+    --ombre-douce:     0 1px 2px #4a341c12, 0 8px 24px -14px #4a341c33;
+    --ombre-forte:     0 2px 4px #4a341c14, 0 24px 60px -22px #4a341c40;
+    --ombre-marque:    0 18px 50px -20px #c2451a59;
+    --anneau:          #c2451a3d;
 
-    --ciel: radial-gradient(120% 90% at 15% 0%, #dfe7f7 0%, #eef0ef 45%, #f7f5f1 100%);
-    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #c2521e1f 0%, transparent 70%);
+    --ciel: radial-gradient(120% 90% at 15% 0%, #fff1e2 0%, #fdf6ec 45%, #fbf8f3 100%);
+    --lueur-accent: radial-gradient(60% 60% at 50% 50%, #c2451a1a 0%, transparent 70%);
+    --lueur-or:     radial-gradient(60% 60% at 50% 50%, #a8730b1a 0%, transparent 70%);
+    --degrade-marque: linear-gradient(120deg, #e0561f 0%, #c2451a 45%, #a8730b 100%);
+    --grille: #1c17100d;
 
-    /* En thème clair le voile reste sombre : les photographies retenues sont
-       toutes contrastées, et le titre est écrit en blanc par-dessus. */
-    --voile-fort: #0b1020e6;
-    --voile-doux: #0b102099;
-    --voile-nul:  #0b10201f;
+    /* Le voile des photographies reste sombre dans les deux thèmes : les
+       visuels retenus sont contrastés et le titre s'y écrit en blanc. */
+    --voile-fort: #10131fe6;
+    --voile-doux: #10131f9c;
+    --voile-nul:  #10131f1f;
   }
 }
 
@@ -106,9 +131,13 @@
   --color-or:            var(--or);
   --color-succes:        var(--succes);
   --color-danger:        var(--danger);
+  --color-ciel-clair:    var(--ciel-clair);
 
-  --font-titre: "Outfit", "Segoe UI", system-ui, sans-serif;
-  --font-sans:  "Inter", "Segoe UI", system-ui, sans-serif;
+  /* Bricolage Grotesque pour les titres : une grotesque à contrastes marqués,
+     qui tient le très grand corps sans devenir bavarde. Plus Jakarta Sans
+     pour le texte courant, dessinée avec de vraies capitales accentuées. */
+  --font-titre: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-sans:  "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
   --font-mono:  "JetBrains Mono", ui-monospace, "Cascadia Mono", monospace;
 
   --animate-derive-lente:  derive 90s linear infinite;
@@ -117,7 +146,14 @@
   --animate-flotte:        flotte 7s ease-in-out infinite;
   --animate-pulse-douce:   pulse-douce 3s ease-in-out infinite;
   --animate-balayage:      balayage 2.2s linear infinite;
+  --animate-orbite:        orbite 24s linear infinite;
+  --animate-trace:         trace 6s ease-in-out infinite;
+  --animate-respire:       respire 9s ease-in-out infinite;
 }
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
 
 @keyframes derive {
   from { transform: translate3d(0, 0, 0); }
@@ -151,6 +187,26 @@
   to   { transform: translateX(200%); }
 }
 
+/* Rotation d'un halo autour de son centre — décor du héros et des sections. */
+@keyframes orbite {
+  from { transform: rotate(0deg)   translateX(6%) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(6%) rotate(-360deg); }
+}
+
+/* Le trait pointillé d'une route aérienne qui se dessine puis s'efface. */
+@keyframes trace {
+  0%        { stroke-dashoffset: 420; opacity: 0; }
+  12%       { opacity: 1; }
+  55%, 75%  { stroke-dashoffset: 0;   opacity: 1; }
+  100%      { stroke-dashoffset: -420; opacity: 0; }
+}
+
+/* Respiration très lente d'un dégradé de fond. */
+@keyframes respire {
+  0%, 100% { transform: scale(1)    translate3d(0, 0, 0); opacity: 0.75; }
+  50%      { transform: scale(1.12) translate3d(2%, -2%, 0); opacity: 1; }
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -169,6 +225,9 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
+
+/* Les titres serrent leur crénage : Bricolage respire beaucoup par défaut. */
+h1, h2, h3 { letter-spacing: -0.022em; }
 
 /* Le changement de thème doit être franc, pas clignotant. */
 body, header, section, article, aside, .transition-theme {
@@ -199,17 +258,87 @@ body, header, section, article, aside, .transition-theme {
 
 /* Surface translucide façon verre dépoli, pour l'en-tête et les cartes du héros. */
 .verre {
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: color-mix(in srgb, var(--surface) 74%, transparent);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+
+/* Verre sombre, à poser sur une photographie quel que soit le thème. */
+.verre-sombre {
+  background: #0b101fa8;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid #ffffff1f;
 }
 
 /* Texte en dégradé pour les titres d'accroche. */
 .texte-degrade {
-  background: linear-gradient(100deg, var(--texte) 10%, var(--accent) 55%, var(--or) 95%);
+  background: linear-gradient(100deg, var(--accent-fort) 0%, var(--accent) 42%, var(--or) 92%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/* Liseré dégradé d'un pixel autour d'une carte mise en avant. */
+.bord-marque {
+  background: var(--degrade-marque);
+  padding: 1px;
+}
+
+/* Trame de points, très discrète, pour meubler les grands aplats. */
+.grille-points {
+  background-image: radial-gradient(var(--grille) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Grain : casse les bandes des dégradés sur les grandes surfaces. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='b'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23b)'/%3E%3C/svg%3E");
+}
+
+/* Fondu latéral, pour les bandeaux qui défilent en boucle. */
+.masque-bords {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* Bloc de texte posé sur une photographie ou une vidéo.
+   Le voile est sombre dans les deux thèmes : les jetons repassent donc en
+   version « nuit », sans quoi le thème clair écrirait en encre brune sur une
+   image sombre.
+
+   La ligne `color` n'est pas décorative : `body` transmet une couleur déjà
+   calculée, et redéfinir `--texte` sur un descendant ne la recalcule pas.
+   Il faut réaffecter `color` ici pour que les titres sans classe suivent. */
+.sur-photo {
+  --texte:        #ffffff;
+  --texte-doux:   #dbe3f2;
+  --texte-faible: #a3b1cb;
+  --accent:       #f26b3a;
+  --accent-fort:  #ff8355;
+  --accent-voile: #f26b3a2e;
+  --or:           #ffc24b;
+  --or-voile:     #ffc24b2e;
+  --succes:       #2fb89a;
+  --succes-voile: #2fb89a2e;
+  --bordure:      #ffffff2e;
+  color: var(--texte);
+}
+
+/* Dans un SVG, une transformation se rapporte par défaut à l'origine du
+   repère, pas à la forme : un `scale` déplace le cercle au lieu de le faire
+   respirer sur place. `transform-box: fill-box` ramène le repère à la boîte
+   de l'élément. À poser sur toute forme SVG animée en échelle ou rotation. */
+.anime-centre {
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
 /* Éléments de décor réservés à un thème (étoiles la nuit, soleil le jour). */

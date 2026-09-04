@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { ArrowRight, Menu, X } from 'lucide-react'
 import { definirJeton } from '../api'
 import Logo, { LogoTexte } from './Logo'
 import BasculeTheme from './BasculeTheme'
@@ -52,8 +53,8 @@ export default function Layout({ children, utilisateur, surDeconnexion, theme, s
             : pleineLargeur ? 'bg-transparent' : 'verre border-b border-bordure'
         }`}
       >
-        <div className="mx-auto flex h-[68px] w-full max-w-7xl items-center gap-4 px-4 sm:px-6">
-          <Link to="/" className="shrink-0">
+        <div className="mx-auto flex h-[72px] w-full max-w-7xl items-center gap-4 px-4 sm:px-6">
+          <Link to="/" className="shrink-0" aria-label="Envol, accueil">
             <LogoTexte />
           </Link>
 
@@ -90,12 +91,7 @@ export default function Layout({ children, utilisateur, surDeconnexion, theme, s
               className="flex h-9 w-9 items-center justify-center rounded-lg border border-bordure
                          text-texte transition hover:border-bordure-forte md:hidden"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                strokeWidth="2.4" strokeLinecap="round">
-                {menuOuvert
-                  ? <path d="M18 6 6 18M6 6l12 12" />
-                  : <path d="M3 6h18M3 12h18M3 18h18" />}
-              </svg>
+              {menuOuvert ? <X size={18} strokeWidth={2.4} /> : <Menu size={18} strokeWidth={2.4} />}
             </button>
           </div>
         </div>
@@ -181,8 +177,15 @@ function PiedDePage() {
   ]
 
   return (
-    <footer className="sans-impression mt-20 border-t border-bordure bg-surface transition-theme">
-      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+    <footer className="sans-impression relative mt-24 border-t border-bordure bg-surface transition-theme">
+      {/* Filet dégradé : la signature de la marque, en un pixel. */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-px"
+        style={{ background: 'var(--degrade-marque)' }}
+      />
+
+      <div className="mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[1.5fr_repeat(3,1fr)]">
         <div>
           <LogoTexte />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-faible">
@@ -190,6 +193,14 @@ function PiedDePage() {
             vos bagages et votre carte d'embarquement, avant même d'arriver à
             l'aéroport.
           </p>
+          <Link
+            to="/"
+            className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent
+                       transition hover:gap-2.5 hover:text-accent-fort"
+          >
+            Commencer mon enregistrement
+            <ArrowRight size={15} strokeWidth={2.4} />
+          </Link>
         </div>
 
         {colonnes.map((c) => (
@@ -215,7 +226,7 @@ function PiedDePage() {
                         sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <p className="flex items-center gap-2">
             <Logo taille={18} />
-            AirPass — prototype d'enregistrement en ligne pour Air Burkina.
+            Envol — prototype d'enregistrement en ligne pour Air Burkina.
           </p>
           <p>
             L'enregistrement en ligne ne remplace pas les contrôles de sûreté

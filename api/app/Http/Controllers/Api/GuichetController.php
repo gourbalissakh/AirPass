@@ -39,8 +39,8 @@ class GuichetController extends ApiController
 
         $terme = trim($donnees['q']);
 
-        // Scan du QR code : « AIRPASS|APXXXXXX|2J201|... »
-        if (Str::startsWith($terme, 'AIRPASS|')) {
+        // Scan du QR code : « ENVOL|ENXXXXXX|2J201|... »
+        if (Str::startsWith($terme, 'ENVOL|')) {
             $terme = explode('|', $terme)[1] ?? $terme;
         }
 

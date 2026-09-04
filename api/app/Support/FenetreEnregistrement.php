@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
  *
  * Les bornes sont calculées à partir du départ prévu et des deux réglages
  * du vol (ouverture / fermeture, en heures), eux-mêmes initialisés depuis
- * config/airpass.php.
+ * config/envol.php.
  */
 final class FenetreEnregistrement
 {

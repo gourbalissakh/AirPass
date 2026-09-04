@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { api, messageErreur } from '../../api'
-import { Alerte, Bouton, Champ, Etiquette, Squelette, Vide } from '../../composants/Ui'
+import { Alerte, Bouton, Champ, Etiquette, Vide } from '../../composants/Ui'
 import { enDateHeure, enHeure, initiales, LIBELLE_STATUT_DOSSIER, ville } from '../../format'
 
 /**
  * Module 6.8 — poste de l'agent au comptoir.
  *
  * Un seul champ de saisie accepte tout : nom, numéro de vol, PNR, référence
- * AirPass ou contenu d'un QR code scanné (EF-8.1). Le reste de l'écran est
+ * Envol ou contenu d'un QR code scanné (EF-8.1). Le reste de l'écran est
  * un volet maître-détail : la file à gauche, le dossier ouvert à droite.
  */
 export default function Guichet() {

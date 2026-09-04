@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API AirPass
+| API Envol
 |--------------------------------------------------------------------------
 | Les routes sont regroupées comme les modules du cahier des charges :
 | 6.1 comptes · 6.2 recherche · 6.3-6.6 enregistrement · 6.7 suivi de vol

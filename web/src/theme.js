@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const CLE = 'airpass.theme'
+const CLE = 'envol.theme'
 
 function themeInitial() {
   try {
@@ -22,7 +22,7 @@ export function useTheme() {
     document.documentElement.dataset.theme = theme
     document
       .querySelector('meta[name=theme-color]')
-      ?.setAttribute('content', theme === 'clair' ? '#f7f5f1' : '#070b18')
+      ?.setAttribute('content', theme === 'clair' ? '#fbf8f3' : '#0a0f1f')
 
     try { localStorage.setItem(CLE, theme) } catch { /* stockage indisponible */ }
   }, [theme])

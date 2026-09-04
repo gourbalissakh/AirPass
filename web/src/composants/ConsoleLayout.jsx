@@ -66,7 +66,7 @@ export default function ConsoleLayout({ children, utilisateur, surDeconnexion, t
         <Link to="/" className="flex items-center gap-2.5 border-b border-bordure px-5 py-4">
           <Logo taille={34} />
           <span className="leading-tight">
-            <strong className="block font-titre text-[15px] font-bold">AirPass</strong>
+            <strong className="block font-titre text-[15px] font-bold">Envol</strong>
             <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-faible">
               Console d'escale
             </span>

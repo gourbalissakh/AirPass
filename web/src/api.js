@@ -11,7 +11,7 @@ export const api = axios.create({
   headers: { Accept: 'application/json' },
 })
 
-const CLE_JETON = 'airpass.jeton'
+const CLE_JETON = 'envol.jeton'
 
 export function definirJeton(jeton) {
   if (jeton) localStorage.setItem(CLE_JETON, jeton)

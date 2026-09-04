@@ -39,7 +39,7 @@ class AuthController extends ApiController
 
         return response()->json([
             'utilisateur' => $this->profil($utilisateur),
-            'jeton' => $utilisateur->createToken('airpass')->plainTextToken,
+            'jeton' => $utilisateur->createToken('envol')->plainTextToken,
         ], 201);
     }
 
@@ -65,7 +65,7 @@ class AuthController extends ApiController
 
         return response()->json([
             'utilisateur' => $this->profil($utilisateur),
-            'jeton' => $utilisateur->createToken('airpass')->plainTextToken,
+            'jeton' => $utilisateur->createToken('envol')->plainTextToken,
         ]);
     }
 

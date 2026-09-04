@@ -47,8 +47,8 @@ class BagagesEtCarteTest extends RecetteTestCase
             ->assertJsonPath('vol.porte', 'B3')
             ->assertJsonPath('statut', 'enregistre');
 
-        $this->assertStringStartsWith('AIRPASS|', $reponse->json('qr'));
-        $this->assertStringStartsWith('AP', $reponse->json('reference'));
+        $this->assertStringStartsWith('ENVOL|', $reponse->json('qr'));
+        $this->assertStringStartsWith('EN', $reponse->json('reference'));
     }
 
     /** EF-5.4 — les bagages déclarés en ligne suivent jusqu'à la carte. */

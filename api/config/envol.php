@@ -9,8 +9,8 @@ return [
      | Valeurs par défaut, en heures avant le départ. Chaque vol peut les
      | surcharger via ses colonnes checkin_ouverture_h / checkin_fermeture_h.
      */
-    'ouverture_h' => (int) env('AIRPASS_OUVERTURE_H', 24),
-    'fermeture_h' => (int) env('AIRPASS_FERMETURE_H', 3),
+    'ouverture_h' => (int) env('ENVOL_OUVERTURE_H', 24),
+    'fermeture_h' => (int) env('ENVOL_FERMETURE_H', 3),
 
     /*
      |----------------------------------------------------------------------
@@ -19,7 +19,7 @@ return [
      | Durée pendant laquelle un siège sélectionné reste réservé au passager
      | avant d'être remis à la disposition des autres.
      */
-    'verrou_siege_minutes' => (int) env('AIRPASS_VERROU_SIEGE_MINUTES', 10),
+    'verrou_siege_minutes' => (int) env('ENVOL_VERROU_SIEGE_MINUTES', 10),
 
     /*
      |----------------------------------------------------------------------

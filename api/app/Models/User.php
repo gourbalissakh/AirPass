@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * Compte AirPass : passager, agent de comptoir ou administrateur (EF-9.5).
+ * Compte Envol : passager, agent de comptoir ou administrateur (EF-9.5).
  *
  * Le mode invité (EF-1.3) ne crée aucun compte : un passager peut mener tout
  * son enregistrement sans jamais apparaître dans cette table.

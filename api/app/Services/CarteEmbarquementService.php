@@ -57,7 +57,7 @@ final class CarteEmbarquementService
     public function contenuQr(CheckIn $enregistrement): string
     {
         return implode('|', [
-            'AIRPASS',
+            'ENVOL',
             $enregistrement->reference,
             $enregistrement->flight->numero_vol,
             $enregistrement->flight->depart_prevu->format('dMy'),

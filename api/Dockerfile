@@ -1,4 +1,4 @@
-# API AirPass — Laravel servi par le serveur intégré de PHP.
+# API Envol — Laravel servi par le serveur intégré de PHP.
 FROM php:8.4-cli-alpine
 
 RUN apk add --no-cache libzip-dev icu-dev oniguruma-dev \

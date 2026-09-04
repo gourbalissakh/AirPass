@@ -1,9 +1,9 @@
 <?php
 
-use App\Providers\AirPassServiceProvider;
+use App\Providers\EnvolServiceProvider;
 use App\Providers\AppServiceProvider;
 
 return [
     AppServiceProvider::class,
-    AirPassServiceProvider::class,
+    EnvolServiceProvider::class,
 ];

@@ -189,7 +189,7 @@ final class EnregistrementService
     private function genererReference(): string
     {
         do {
-            $reference = 'AP'.strtoupper(Str::random(6));
+            $reference = 'EN'.strtoupper(Str::random(6));
         } while (CheckIn::where('reference', $reference)->exists());
 
         return $reference;

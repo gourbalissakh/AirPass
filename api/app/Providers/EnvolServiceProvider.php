@@ -12,7 +12,7 @@ use Illuminate\Support\ServiceProvider;
  * Le jour où Air Burkina ouvre l'accès à son système de réservation, seule
  * cette liaison change (§8.2 du cahier des charges).
  */
-class AirPassServiceProvider extends ServiceProvider
+class EnvolServiceProvider extends ServiceProvider
 {
     public function register(): void
     {

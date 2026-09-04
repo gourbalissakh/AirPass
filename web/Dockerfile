@@ -1,4 +1,4 @@
-# Front AirPass — build Vite puis service statique par nginx.
+# Front Envol — build Vite puis service statique par nginx.
 FROM node:22-alpine AS build
 
 WORKDIR /app

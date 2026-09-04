@@ -1,4 +1,4 @@
-# AirPass — Matrice de traçabilité des exigences
+# Envol — Matrice de traçabilité des exigences
 
 Chaque exigence du cahier des charges v1.0 (§6 et §7) est reliée à son
 implémentation et à son test de recette. C'est le livrable « Plan de
@@ -125,4 +125,4 @@ revient à consommer les lignes au statut `en_attente`.
 3. **Émission réelle des notifications** — les envois sont mis en file, pas
    transmis : cela demande un contrat avec un fournisseur SMS/push.
 4. **DCS réel** — conformément au §8.2 du cahier des charges, le prototype
-   fonctionne sur une base de vols et réservations gérée par AirPass.
+   fonctionne sur une base de vols et réservations gérée par Envol.

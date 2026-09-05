@@ -52,7 +52,7 @@ refuse le trafic en clair par défaut, et n'autorise que les adresses de
 développement connues. C'est volontaire — l'API de production devra être
 servie en HTTPS, comme l'exige la section « Sécurité » du cahier des charges.
 
-## Compilation
+## Compilation Android
 
 ```bash
 flutter build apk --release                  # APK universel  (~51 Mo)
@@ -61,6 +61,43 @@ flutter build apk --release --split-per-abi  # arm64 ~19 Mo, armeabi-v7a ~16 Mo
 
 Les APK sortent dans `build/app/outputs/flutter-apk/`. Pour un téléphone
 récent, `app-arm64-v8a-release.apk` suffit.
+
+## iOS
+
+Le code Dart est partagé : il n'y a rien de spécifique à écrire. Le projet
+Xcode est dans `ios/`, l'application s'appelle « Envol » et vise iOS 13
+minimum.
+
+En revanche, **compiler pour iOS exige macOS**. Xcode et la signature de
+code n'existent que sur Mac ; ce n'est pas une limite du projet mais une
+contrainte d'Apple. Sur un Mac :
+
+```bash
+cd mobile
+flutter run                                    # simulateur iOS
+flutter run --dart-define=ENVOL_API=http://192.168.1.20:8001/api   # iPhone réel
+flutter build ipa --release                    # archive pour distribution
+```
+
+Sur le **simulateur**, l'API est joignable par `localhost` : le simulateur
+tourne sur le Mac lui-même, contrairement à l'émulateur Android qui impose
+l'alias `10.0.2.2`. Sur un **iPhone réel**, il faut, comme sous Android,
+deux changements concordants :
+
+1. l'adresse du poste en `dart-define` ;
+2. cette même adresse déclarée dans `NSExceptionDomains`, au sein de la clé
+   `NSAppTransportSecurity` de `ios/Runner/Info.plist`.
+
+Sans le second, iOS bloque la connexion. La politique du projet refuse le
+trafic en clair par défaut (`NSAllowsArbitraryLoads` à `false`) et n'ouvre
+que les adresses de développement connues — le pendant exact du
+`network_security_config.xml` d'Android.
+
+Pour installer sur un iPhone il faut un identifiant Apple : gratuit, la
+signature vaut 7 jours et doit être renouvelée ; avec un compte Apple
+Developer, elle vaut un an. Sans Mac sous la main, un service
+d'intégration continue avec des agents macOS (Codemagic, GitHub Actions,
+Bitrise) produit l'archive sans en posséder un.
 
 ## Vérifications
 

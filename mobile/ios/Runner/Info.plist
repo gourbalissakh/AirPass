@@ -26,6 +26,40 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<!-- App Transport Security.
+
+	     iOS refuse tout trafic en clair depuis iOS 9. La production devra etre
+	     servie en HTTPS, comme l'exige la section Securite du cahier des
+	     charges ; les exceptions ci-dessous ne visent que le developpement.
+
+	     Le simulateur iOS tourne sur le Mac lui-meme : "localhost" y designe
+	     donc bien la machine hote, contrairement a l'emulateur Android qui
+	     impose l'alias 10.0.2.2. Sur un iPhone reel, ajoutez l'adresse IP du
+	     poste de developpement dans NSExceptionDomains, et passez la meme
+	     adresse en dart-define ENVOL_API. Voir mobile/README.md. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>127.0.0.1</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+			<key>192.168.1.10</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

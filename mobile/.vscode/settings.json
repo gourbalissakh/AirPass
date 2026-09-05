@@ -1,0 +1,23 @@
+{
+  // Le formateur de Dart cadre à 80 colonnes par défaut ; le projet suit
+  // cette convention, et le format à l'enregistrement évite les diffs de
+  // pure mise en forme.
+  "[dart]": {
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+
+  // Ces dossiers sont générés : les masquer accélère la recherche et évite
+  // d'ouvrir un fichier compilé par erreur.
+  "search.exclude": {
+    "**/build": true,
+    "**/.dart_tool": true
+  },
+
+  "dart.previewFlutterUiGuides": true,
+  "dart.openDevTools": "flutter"
+}

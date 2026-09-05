@@ -48,8 +48,24 @@ flutter run
 ```
 
 Sur un téléphone réel, il faut donner l'adresse du poste de développement
-et l'autoriser dans la politique réseau : voir
+**et** l'autoriser dans la politique réseau de la plateforme : les deux
+changements vont ensemble, sinon le système bloque avant que la requête ne
+parte.
+
+Toute la marche à suivre — prérequis par plateforme, configuration VS Code
+livrée avec le projet, compilation, tests et dépannage — est dans
 [`mobile/README.md`](mobile/README.md).
+
+Deux points qui reviennent souvent :
+
+- **Un Mac sans Xcode** permet d'éditer, d'analyser, de lancer les tests et
+  de faire tourner l'application dans Chrome. Il ne permet aucune cible
+  iOS : le simulateur est livré dans Xcode et la compilation passe par
+  `xcodebuild`. VS Code n'est qu'un éditeur — l'extension Flutter appelle
+  les mêmes outils en dessous.
+- **Sans débogage USB**, on installe l'APK en le copiant sur le téléphone
+  et en l'ouvrant depuis le gestionnaire de fichiers. C'est suffisant pour
+  tester ; le débogage n'apporte que le rechargement à chaud.
 
 ## Comptes de démonstration
 

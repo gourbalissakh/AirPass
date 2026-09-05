@@ -1,0 +1,8 @@
+{
+  // Extensions proposées à l'ouverture du dossier dans VS Code.
+  // Les deux premières suffisent à développer, lancer et déboguer Envol.
+  "recommendations": [
+    "dart-code.dart-code",
+    "dart-code.flutter"
+  ]
+}

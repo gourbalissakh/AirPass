@@ -7,6 +7,13 @@ Thumbs.db
 .vscode/
 *.swp
 
+# Exception : la configuration VS Code de l'application mobile est
+# volontairement versionnée. Elle porte les lancements prêts à l'emploi
+# (navigateur, émulateur, appareil réel) et les extensions à installer :
+# c'est de la documentation exécutable, pas un réglage personnel.
+!mobile/.vscode/
+!mobile/.vscode/**
+
 # Environnement
 .env
 .env.*

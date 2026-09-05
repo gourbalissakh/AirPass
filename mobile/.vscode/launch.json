@@ -1,0 +1,66 @@
+{
+  // Configurations de lancement d'Envol.
+  //
+  // L'adresse de l'API n'est pas codée en dur : chaque poste a la sienne.
+  // Les configurations « réseau » la demandent au lancement (voir `inputs`
+  // en bas de fichier), et VS Code retient la dernière valeur saisie.
+  //
+  // Rappel : sur un appareil réel, l'adresse doit AUSSI être déclarée dans
+  // la politique réseau de la plateforme, sans quoi le système bloque le
+  // trafic en clair. Voir la section « Réseau » de mobile/README.md.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Ne demande ni Xcode ni SDK Android : le plus rapide pour travailler
+      // l'interface, y compris sur un Mac qui n'a que VS Code.
+      "name": "Envol — navigateur (Chrome)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--dart-define=ENVOL_API=http://localhost:8001/api"]
+    },
+    {
+      // 10.0.2.2 est l'alias de la machine hôte vu depuis l'émulateur.
+      "name": "Envol — émulateur Android",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=ENVOL_API=http://10.0.2.2:8001/api"]
+    },
+    {
+      // Le simulateur iOS tourne sur le Mac lui-même : localhost convient.
+      // Demande Xcode installé.
+      "name": "Envol — simulateur iOS",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=ENVOL_API=http://localhost:8001/api"]
+    },
+    {
+      // Téléphone ou iPhone branché, sur le même Wi-Fi que le poste.
+      "name": "Envol — appareil réel (adresse à saisir)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "args": ["--dart-define=ENVOL_API=http://${input:adresseApi}:8001/api"]
+    },
+    {
+      // Version compilée, pour mesurer les performances réelles.
+      "name": "Envol — release sur appareil réel",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "flutterMode": "release",
+      "args": ["--dart-define=ENVOL_API=http://${input:adresseApi}:8001/api"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "adresseApi",
+      "type": "promptString",
+      "description": "Adresse IP du poste qui fait tourner l'API (ex. 192.168.1.10)",
+      "default": "192.168.1.10"
+    }
+  ]
+}

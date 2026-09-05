@@ -118,14 +118,21 @@ racine du projet elle ne trouverait rien et resterait inactive.
 | Configuration | Cible | Xcode ? |
 |---|---|---|
 | Envol — navigateur (Chrome) | Chrome, API sur `localhost` | non |
+| Envol — navigateur, API sur le réseau | Chrome, API sur une autre machine | non |
 | Envol — émulateur Android | émulateur, API sur `10.0.2.2` | non |
 | Envol — simulateur iOS | simulateur, API sur `localhost` | oui |
 | Envol — appareil réel (adresse à saisir) | téléphone ou iPhone branché | selon la cible |
 | Envol — release sur appareil réel | version compilée, pour juger les performances | selon la cible |
 
-Les deux dernières **demandent l'adresse IP du poste** au lancement, plutôt
+Trois d'entre elles **demandent l'adresse IP du poste** au lancement, plutôt
 que de la coder en dur : chaque machine a la sienne, et VS Code retient la
 dernière valeur saisie.
+
+La configuration « navigateur, API sur le réseau » couvre un cas fréquent :
+un poste de développement qui n'héberge pas l'API — un Mac sans PHP, par
+exemple — alors que le serveur tourne sur une autre machine du réseau. Le
+navigateur peut l'appeler directement, sans relais : l'API renvoie
+`Access-Control-Allow-Origin: *` sur `/api/*`, donc CORS ne bloque pas.
 
 **Pendant le développement** : `r` dans la console recharge à chaud (l'état
 de l'écran est conservé), `R` redémarre l'application. Le panneau

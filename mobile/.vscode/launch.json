@@ -21,6 +21,19 @@
       "args": ["--dart-define=ENVOL_API=http://localhost:8001/api"]
     },
     {
+      // Cas d'un poste qui n'héberge pas l'API — un Mac sans PHP, par
+      // exemple, alors que le serveur tourne sur une autre machine du
+      // réseau. Le navigateur peut l'appeler directement : l'API répond
+      // « Access-Control-Allow-Origin: * » sur /api/*, donc aucun relais
+      // n'est nécessaire pour contourner CORS.
+      "name": "Envol — navigateur, API sur le réseau (adresse à saisir)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main.dart",
+      "deviceId": "chrome",
+      "args": ["--dart-define=ENVOL_API=http://${input:adresseApi}:8001/api"]
+    },
+    {
       // 10.0.2.2 est l'alias de la machine hôte vu depuis l'émulateur.
       "name": "Envol — émulateur Android",
       "request": "launch",

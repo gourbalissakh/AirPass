@@ -12,6 +12,7 @@ nom de travail du cahier des charges, « Envol » est celui du produit.
 |---|---|
 | `api/` | Back-end Laravel — API REST, logique métier, base de données |
 | `web/` | Front-end React (passager, agent guichet, back-office) |
+| `mobile/` | Application Flutter (parcours passager, Android et iOS) |
 | `docs/` | Modèle de données, traçabilité des exigences, crédits médias |
 
 ## Démarrage
@@ -39,7 +40,16 @@ php artisan serve --port=8001
 cd web
 npm install
 npm run dev
+
+# Mobile — l'API doit tourner ; 10.0.2.2 est l'alias de la machine hôte
+# vu depuis un émulateur Android.
+cd mobile
+flutter run
 ```
+
+Sur un téléphone réel, il faut donner l'adresse du poste de développement
+et l'autoriser dans la politique réseau : voir
+[`mobile/README.md`](mobile/README.md).
 
 ## Comptes de démonstration
 
@@ -54,9 +64,12 @@ numéro de passeport suffisent.
 
 ## Identité visuelle
 
-Le système de design vit dans un seul fichier, `web/src/index.css`. Deux
-thèmes complets y sont définis en variables CSS, exposées à Tailwind par
-`@theme inline` — on bascule de l'un à l'autre sans recompiler.
+Le système de design vit dans un seul fichier par plateforme :
+`web/src/index.css` pour le web, `mobile/lib/theme/palette.dart` pour
+l'application. Les mêmes jetons, les mêmes valeurs. Côté web, deux thèmes
+complets sont définis en variables CSS et exposés à Tailwind par
+`@theme inline` — on bascule de l'un à l'autre sans recompiler ; côté
+mobile, ils voyagent dans une extension de thème Material 3.
 
 | | Sombre | Clair |
 |---|---|---|
@@ -119,7 +132,9 @@ cette interface.
 ## Tests
 
 ```bash
-cd api && php artisan test     # 46 tests, 165 assertions
-cd web && npm run build        # compilation de production
-cd web && npm run lint         # oxlint
+cd api    && php artisan test     # 46 tests, 165 assertions
+cd web    && npm run build        # compilation de production
+cd web    && npm run lint         # oxlint
+cd mobile && flutter test         # 28 tests
+cd mobile && flutter analyze      # analyse statique
 ```

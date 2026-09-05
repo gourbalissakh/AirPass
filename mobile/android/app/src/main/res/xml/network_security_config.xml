@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Politique reseau d'Envol.
+
+  Par defaut tout trafic en clair est refuse : l'API de production devra etre
+  servie en HTTPS, comme l'exige la section Securite du cahier des charges.
+
+  L'exception ci-dessous ne vise que les adresses de developpement : la machine
+  hote vue depuis un emulateur Android, et la boucle locale. Pour tester depuis
+  un telephone reel sur le meme Wi-Fi, ajoutez l'adresse IP du poste de
+  developpement dans le bloc domain-config, puis lancez l'application avec la
+  meme adresse, passee en dart-define ENVOL_API. Voir mobile/README.md.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.0.2.2</domain>
+        <domain includeSubdomains="false">10.0.3.2</domain>
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">127.0.0.1</domain>
+    </domain-config>
+</network-security-config>

@@ -105,7 +105,7 @@ revient à consommer les lignes au statut `en_attente`.
 
 | Exigence | Traitement dans le prototype |
 |---|---|
-| **Plateformes** | Web responsive (React + Tailwind), utilisable du mobile au poste fixe. L'application mobile native reste à produire : l'API étant déjà partagée, elle consommera les mêmes points d'entrée. |
+| **Plateformes** | Web responsive (React + Tailwind), utilisable du mobile au poste fixe, et application mobile Flutter (`mobile/`) pour le parcours passager sur Android et iOS. Les deux clients consomment la même API, sans point d'entrée dédié : seul le canal déclaré diffère (`web` ou `mobile`), ce qui permet de mesurer l'adoption de chacun. |
 | **Performance (< 3 s)** | Index sur `(flight_id, statut)`, `(flight_id, code)`, `(depart_prevu, statut)` ; le plan de cabine est servi en une requête. |
 | **Disponibilité 99,5 %** | Relève de l'exploitation ; le point de santé `/up` est exposé pour la supervision. |
 | **Sécurité** | Mots de passe hachés (bcrypt), jetons Sanctum, `qr_jeton` de 64 caractères aléatoires jamais renvoyé dans les listes, dossiers non énumérables. HTTPS à assurer au déploiement. |
@@ -118,8 +118,10 @@ revient à consommer les lignes au statut `en_attente`.
 
 ## Écarts assumés
 
-1. **Application mobile native** — hors périmètre du prototype. L'API et le
-   modèle de données sont conçus pour la servir sans modification.
+1. **Module comptoir sur mobile** — l'application Flutter couvre le parcours
+   passager (recherche, enregistrement, siège, carte d'embarquement, statut
+   de vol). Le poste de l'agent reste sur la console web : il suppose un
+   lecteur de code-barres et un grand écran, pas un téléphone.
 2. **EF-1.4, EF-6.3, EF-7.3** — priorités Moyenne et Basse, renvoyées à une
    version ultérieure ; le schéma les anticipe (`traveler_profiles` existe).
 3. **Émission réelle des notifications** — les envois sont mis en file, pas
